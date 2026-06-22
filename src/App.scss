@@ -1,0 +1,70 @@
+@use 'sass:color';
+@use './styles/variables' as *;
+
+.app {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+
+  &__tool-panel-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    z-index: 10;
+    // Allow interaction while drawing on canvas
+    touch-action: none;
+    pointer-events: all;
+  }
+
+  &__color-picker-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 100px;
+    transform: translateY(-50%);
+    z-index: 11;
+    touch-action: none;
+    pointer-events: all;
+  }
+
+  &__toast {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    pointer-events: none;
+    animation: fadeInUp 0.3s ease;
+    z-index: 20;
+    white-space: nowrap;
+  }
+
+  &__watermark {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.18);
+    pointer-events: none;
+    letter-spacing: 0.05em;
+    z-index: 5;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}

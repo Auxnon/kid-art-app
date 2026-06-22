@@ -1,0 +1,201 @@
+@use 'sass:color';
+@use '../styles/variables' as *;
+
+.tool-panel {
+  position: relative;
+  background: $panel-bg;
+  border-radius: 20px;
+  padding: 12px 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  user-select: none;
+  touch-action: none;
+  min-width: 76px;
+  width: 76px;
+
+  &__tools {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__divider {
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    margin: 0 4px;
+  }
+
+  &__color-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__size-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+.tool-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 7px 6px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  touch-action: none;
+  transition: background 0.15s, transform 0.1s;
+  width: 100%;
+
+  &__icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: 9px;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  &:hover {
+    background: rgba(0,0,0,0.06);
+    transform: scale(1.05);
+  }
+
+  &.active {
+    background: $accent;
+    border-color: color.adjust($accent, $lightness: -10%);
+    transform: scale(1.0);
+
+    .tool-btn__label {
+      color: #fff;
+    }
+  }
+}
+
+.color-swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.15);
+  cursor: pointer;
+  touch-action: none;
+  transition: transform 0.1s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &__label {
+    font-size: 9px;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+  }
+}
+
+.size-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.size-track {
+  width: 100%;
+}
+
+.size-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, $accent, color.adjust($accent, $lightness: 20%));
+  outline: none;
+  touch-action: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: $accent;
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: $accent;
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+}
+
+.size-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 44px;
+}
+
+.size-dot {
+  border-radius: 50%;
+  transition: width 0.1s, height 0.1s, background 0.2s;
+  min-width: 4px;
+  min-height: 4px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 4px;
+  border-radius: 10px;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: none;
+  transition: transform 0.1s, background 0.15s;
+  width: 100%;
+
+  &:hover { transform: scale(1.04); }
+
+  &--clear {
+    background: #FFE0E0;
+    color: #D32F2F;
+    &:hover { background: #FFCCCC; }
+  }
+
+  &--save {
+    background: #E3F2FD;
+    color: #1565C0;
+    &:hover { background: #BBDEFB; }
+  }
+}
