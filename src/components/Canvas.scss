@@ -15,3 +15,9 @@
   touch-action: none;
   cursor: crosshair;
 }
+
+// In-progress stroke layer, stacked above the committed canvas. Pointer events
+// fall through to the canvas below so input handling is unchanged.
+.live-layer {
+  pointer-events: none;
+}
