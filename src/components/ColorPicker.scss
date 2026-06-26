@@ -1,0 +1,159 @@
+@use 'sass:color';
+@use '../styles/variables' as *;
+
+.color-picker {
+  position: relative;
+  background: $panel-bg;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  width: 220px;
+  user-select: none;
+  touch-action: none;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  &__preview {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+  }
+
+  &__tabs {
+    display: flex;
+    gap: 4px;
+    flex: 1;
+  }
+
+  &__close {
+    background: rgba(0,0,0,0.1);
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
+    flex-shrink: 0;
+
+    &:hover { background: rgba(0,0,0,0.2); }
+  }
+
+  &__palette {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  &__custom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: 1.5px solid transparent;
+  background: rgba(0,0,0,0.06);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: none;
+  transition: all 0.15s;
+  color: #555;
+
+  &.active {
+    background: $accent;
+    color: #fff;
+    border-color: $accent;
+  }
+}
+
+.palette-swatch {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  touch-action: none;
+  transition: transform 0.1s;
+
+  &:hover, &:focus {
+    transform: scale(1.15);
+    outline: none;
+  }
+
+  &.active {
+    border-color: #fff;
+    box-shadow: 0 0 0 2px $accent;
+    transform: scale(1.15);
+  }
+}
+
+// Saturation/Value picker box
+.sv-picker {
+  width: 100%;
+  height: 120px;
+  border-radius: 8px;
+  position: relative;
+  cursor: crosshair;
+  touch-action: none;
+  overflow: hidden;
+
+  &__thumb {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1.5px rgba(0,0,0,0.4);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+}
+
+// Hue slider bar
+.hue-slider {
+  width: 100%;
+  height: 16px;
+  border-radius: 8px;
+  background: linear-gradient(
+    to right,
+    hsl(0,100%,50%), hsl(30,100%,50%), hsl(60,100%,50%),
+    hsl(90,100%,50%), hsl(120,100%,50%), hsl(150,100%,50%),
+    hsl(180,100%,50%), hsl(210,100%,50%), hsl(240,100%,50%),
+    hsl(270,100%,50%), hsl(300,100%,50%), hsl(330,100%,50%),
+    hsl(360,100%,50%)
+  );
+  position: relative;
+  cursor: pointer;
+  touch-action: none;
+
+  &__thumb {
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid rgba(0,0,0,0.25);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+}
