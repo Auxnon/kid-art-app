@@ -138,9 +138,12 @@ export function drawBrushStroke(ctx, points, toolState, sampleCtx) {
       path.moveTo(points[0].x + rad, points[0].y)
       path.arc(points[0].x, points[0].y, rad, 0, Math.PI * 2)
     } else {
-      // Ribbon polygon: left edge forward, right edge back. Round end caps are
-      // added as full circles so the union gives clean round ends without any
-      // cap-angle math.
+      // One continuous outline: left edge forward, a round cap arc around the
+      // leading tip, right edge back, a round cap arc around the start, close.
+      // The caps are arcs that CONTINUE this outline rather than separate full
+      // circles — a separate circle winds opposite to the ribbon body and, under
+      // nonzero-winding fill, cancels in the overlap and punches a white hole at
+      // the tip (the artifact). Keeping it one simple loop fills cleanly.
       for (let i = 0; i < n; i++) {
         const rad = brushRadiusOf(points[i], size) * scale
         const x = points[i].x + normals[i].x * rad
@@ -148,18 +151,20 @@ export function drawBrushStroke(ctx, points, toolState, sampleCtx) {
         if (i === 0) path.moveTo(x, y)
         else path.lineTo(x, y)
       }
-      for (let i = n - 1; i >= 0; i--) {
+      // Cap around the tip: from the left edge round to the right edge, bulging
+      // forward past the leading point.
+      const rn = brushRadiusOf(lead, size) * scale
+      const angTip = Math.atan2(normals[n - 1].y, normals[n - 1].x)
+      path.arc(lead.x, lead.y, rn, angTip, angTip - Math.PI, true)
+      for (let i = n - 2; i >= 0; i--) {
         const rad = brushRadiusOf(points[i], size) * scale
         path.lineTo(points[i].x - normals[i].x * rad, points[i].y - normals[i].y * rad)
       }
-      path.closePath()
-
+      // Cap around the start, bulging back past the first point.
       const r0 = brushRadiusOf(points[0], size) * scale
-      path.moveTo(points[0].x + r0, points[0].y)
-      path.arc(points[0].x, points[0].y, r0, 0, Math.PI * 2)
-      const rn = brushRadiusOf(lead, size) * scale
-      path.moveTo(lead.x + rn, lead.y)
-      path.arc(lead.x, lead.y, rn, 0, Math.PI * 2)
+      const angStart = Math.atan2(-normals[0].y, -normals[0].x)
+      path.arc(points[0].x, points[0].y, r0, angStart, angStart - Math.PI, true)
+      path.closePath()
     }
 
     ctx.fillStyle = `rgba(${r},${g},${b},${a})`
